@@ -1,6 +1,5 @@
 <Cabbage>
-
-form size(500, 130), caption("FM synth"), pluginID("simple-stupid-FM-synth")
+form size(500, 130), caption("FM-synth"), pluginID("simple-fm")
 keyboard bounds(0, 80, 500, 50)
 
 groupbox bounds(0, 0, 300, 80), text("Fm Synth"), preset("preset"), plant("synth") {
@@ -12,23 +11,21 @@ groupbox bounds(0, 0, 300, 80), text("Fm Synth"), preset("preset"), plant("synth
     rslider bounds(250, 25, 50, 50), channel("car"), range(1, 15, 3, 1, 1), text("car")
 }
 
-groupbox bounds(301, 0, 200, 80), text("Envelope"), preset("preset"), plant("envelope") {
+groupbox bounds(300, 0, 200, 80), text("Envelope"), preset("preset"), plant("envelope") {
     rslider bounds(0, 25, 50, 50), channel("a"), range(0.001, 10, 0.001, 0.4, 0.001), text("a")
     rslider bounds(50, 25, 50, 50), channel("d"), range(0.001, 10, 1, 0.4, 0.001), text("d")
     rslider bounds(100, 25, 50, 50), channel("s"), range(0.001, 10, 1, 0.4, 0.001), text("s")
     rslider bounds(150, 25, 50, 50), channel("r"), range(0.001, 10, 1, 0.4, 0.001), text("r")
 }
-
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
 -n -d -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
 </CsOptions>
 <CsInstruments>
-
 sr = 44100
 ksmps = 64
-nchnls = 1
+nchnls = 2
 0dbfs = 1
 
 instr 1
@@ -41,6 +38,7 @@ instr 1
     iline2 chnget "l2"
     iline3 chnget "l3"
     kcarraw chnget "car"
+    kcarraw = int(kcarraw)
     iatt chnget "a"
     idec chnget "d"
     isus chnget "s"
